@@ -96,7 +96,10 @@ export function skipKey(key) {
 export function stop() {
   this.shouldStop = true;
   this.shouldSkip = true;
+  this.stopChildren();
+}
 
+export function stopChildren() {
   // We need to stop any iteration that might happen on the children of the current path as well.
   for (let childPath of this.childPaths) {
     childPath.stop();
