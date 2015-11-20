@@ -16,6 +16,7 @@ export default class NodePath {
     this.parent = parent;
     this.hub = hub;
     this.contexts = [];
+    this.childPaths = [];
     this.data = {};
     this.shouldSkip = false;
     this.shouldStop = false;

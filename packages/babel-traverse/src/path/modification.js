@@ -24,6 +24,7 @@ export function insertBefore(nodes) {
     if (Array.isArray(this.container)) {
       return this._containerInsertBefore(nodes);
     } else if (this.isStatementOrBlock()) {
+      this.stop();
       if (this.node) nodes.push(this.node);
       this._replaceWith(t.blockStatement(nodes));
     } else {
@@ -118,6 +119,7 @@ export function insertAfter(nodes) {
     if (Array.isArray(this.container)) {
       return this._containerInsertAfter(nodes);
     } else if (this.isStatementOrBlock()) {
+      this.stop();
       if (this.node) nodes.unshift(this.node);
       this._replaceWith(t.blockStatement(nodes));
     } else {

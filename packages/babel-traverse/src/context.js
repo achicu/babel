@@ -57,6 +57,9 @@ export default class TraversalContext {
     }
 
     if (this.queue) {
+      path.shouldStop = false;
+      path.shouldSkip = false;
+      
       if (notPriority) {
         this.queue.push(path);
       } else {

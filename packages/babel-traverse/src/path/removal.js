@@ -6,6 +6,7 @@ export function remove() {
   this._assertUnremoved();
 
   this.resync();
+  this.stop();
 
   if (this._callRemovalHooks()) {
     this._markRemoved();

@@ -49,6 +49,21 @@ export function visit(): boolean {
     return false;
   }
 
+  var parentPath = this.parentPath;
+  if (parentPath) {
+    parentPath.pushChildPath(this);
+  }
+
+  var shouldStop = this._visit();
+
+  if (parentPath) {
+    parentPath.popChildPath();
+  }
+
+  return shouldStop;
+}
+
+export function _visit() {
   if (this.isBlacklisted()) {
     return false;
   }
@@ -81,6 +96,11 @@ export function skipKey(key) {
 export function stop() {
   this.shouldStop = true;
   this.shouldSkip = true;
+
+  // We need to stop any iteration that might happen on the children of the current path as well.
+  for (let childPath of this.childPaths) {
+    childPath.stop();
+  }
 }
 
 export function setScope() {
@@ -191,6 +211,15 @@ export function pushContext(context) {
   this.contexts.push(context);
   this.setContext(context);
 }
+
+export function popChildPath() {
+  this.childPaths.pop();
+}
+
+export function pushChildPath(path) {
+  this.childPaths.push(path);
+}
+
 
 export function setup(parentPath, container, listKey, key) {
   this.inList    = !!listKey;

@@ -43,6 +43,7 @@ let hoistVariablesVisitor = {
 
 export function replaceWithMultiple(nodes: Array<Object>) {
   this.resync();
+  this.stop();
 
   nodes = this._verifyNodeList(nodes);
   t.inheritLeadingComments(nodes[0], this.node);
@@ -91,6 +92,7 @@ export function replaceWithSourceString(replacement) {
 
 export function replaceWith(replacement) {
   this.resync();
+  this.stop();
 
   if (this.removed) {
     throw new Error("You can't replace this node, we've already removed it");
