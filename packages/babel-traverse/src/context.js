@@ -59,6 +59,7 @@ export default class TraversalContext {
     if (this.queue) {
       // We are going to iterate on this node again. No need to continue with it.
       path.stopChildren();
+      path.shouldSkip = true;
 
       if (notPriority) {
         this.queue.push(path);
@@ -105,7 +106,9 @@ export default class TraversalContext {
 
     // visit the queue
     for (let path of queue) {
-      path.shouldStop = path.shouldSkip = false;
+      // reset the skip flag for nodes that have been 
+      // added again to the queue.
+      path.shouldSkip = false;
 
       path.resync();
       path.pushContext(this);

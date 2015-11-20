@@ -80,6 +80,11 @@ export function _visit() {
   this.debug(() => "Recursing into...");
   traverse.node(this.node, this.opts, this.scope, this.state, this, this.skipKeys);
 
+  // A child element can make us skip the exit for the parent node.
+  if (this.shouldSkip) {
+    return this.shouldStop;
+  }
+
   this.call("exit");
 
   return this.shouldStop;
